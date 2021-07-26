@@ -52,8 +52,29 @@ class User extends Authenticatable
         return $this->belongsToMany(Cidade::class, 'cidade_diarista');
     }
 
-    public function scopeDiarista(Builder $query)
+    /**
+     * Escopo que filtra os(as) diaristas
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeDiarista(Builder $query): Builder
     {
         return $query->where('tipo_usuario', '=', 2);
+    }
+
+    /**
+     * Escopo que filtra diaristas por código do IBGE
+     *
+     * @param Builder $query
+     * @param integer $codigoIbge
+     * @return Builder
+     */
+    public function scopeDiaristasAtendeCidade(Builder $query, int $codigoIbge): Builder
+    {
+        return $query->diarista()
+                    ->whereHas('cidadesAtendidas', function($q) use ($codigoIbge) {
+                        $q->where('codigo_ibge', '=', $codigoIbge);
+                    });
     }
 }
