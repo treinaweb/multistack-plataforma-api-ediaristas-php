@@ -40,4 +40,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Define a relação com as cidades atendidas pelo(a) diarista
+     *
+     * @return void
+     */
+    public function cidadesAtendidas()
+    {
+        return $this->belongsToMany(Cidade::class, 'cidade_diarista');
+    }
 }
