@@ -16,6 +16,16 @@ class ViaCEP
     {
         $resposta = Http::get("https://viacep.com.br/ws/$cep/json/");
 
-        return $resposta->json();
+        if ($resposta->failed()) {
+            return false;
+        }
+
+        $dados = $resposta->json();
+
+        if (isset($dados['erro']) && $dados['erro'] === true) {
+            return false;
+        }
+
+        return $dados;
     }
 }

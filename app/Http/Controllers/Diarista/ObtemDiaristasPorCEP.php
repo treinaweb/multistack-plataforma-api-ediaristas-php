@@ -21,6 +21,10 @@ class ObtemDiaristasPorCEP extends Controller
     {
         $dados = $servicoCEP->buscar($request->cep);
 
+        if ($dados === false) {
+            return response()->json(['erro' => 'CEP Inválido'], 400);
+        }
+
         return new DiariaristaPublicoCollection(
             User::diaristasDisponivelCidade($dados['ibge']),
             User::diaristasDisponivelCidadeTotal($dados['ibge'])
