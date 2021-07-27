@@ -26,8 +26,8 @@ class ObtemDiaristasPorCEP extends Controller
         }
 
         return new DiariaristaPublicoCollection(
-            User::diaristasDisponivelCidade($dados['ibge']),
-            User::diaristasDisponivelCidadeTotal($dados['ibge'])
+            User::diaristasDisponivelCidade($dados->ibge),
+            User::diaristasDisponivelCidadeTotal($dados->ibge)
         );
     }
 }

@@ -10,9 +10,9 @@ class ViaCEP
      * Buscar endereço utizando a api do viaCEP
      *
      * @param string $cep
-     * @return void
+     * @return false|EnderecoResponse
      */
-    public function buscar(string $cep)
+    public function buscar(string $cep): false|EnderecoResponse
     {
         $resposta = Http::get("https://viacep.com.br/ws/$cep/json/");
 
@@ -26,6 +26,25 @@ class ViaCEP
             return false;
         }
 
-        return $dados;
+        return $this->populaEnderecoResponse($dados);
+    }
+
+    /**
+     * Formata a saída para endereço response
+     *
+     * @param array $dados
+     * @return EnderecoResponse
+     */
+    private function populaEnderecoResponse(array $dados): EnderecoResponse
+    {
+        return new EnderecoResponse(
+            cep: $dados['cep'],
+            logradouro: $dados['logradouro'],
+            complemento: $dados['complemento'],
+            bairro: $dados['bairro'],
+            localidade: $dados['localidade'],
+            uf: $dados['uf'],
+            ibge: $dados['ibge'],
+        );
     }
 }
