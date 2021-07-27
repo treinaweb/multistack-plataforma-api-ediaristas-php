@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Services\ConsultaCEP\ConsultaCEPInterface;
-use App\Services\ConsultaCEP\Providers\ViaCEP;
 use Illuminate\Support\ServiceProvider;
+use App\Services\ConsultaCEP\Providers\ViaCEP;
+use App\Services\ConsultaCEP\ConsultaCEPInterface;
 
 class AppServiceProvider extends ServiceProvider
 {

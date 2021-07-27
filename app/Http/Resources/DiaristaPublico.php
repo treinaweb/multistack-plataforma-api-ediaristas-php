@@ -7,12 +7,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class DiaristaPublico extends JsonResource
 {
     /**
-     * Transform the resource into an array.
+     * Define os dados retornados para cada diarista
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'nome_completo' => $this->nome_completo,
