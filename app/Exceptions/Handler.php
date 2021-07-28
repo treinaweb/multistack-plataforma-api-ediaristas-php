@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -37,5 +38,28 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * Faz o tratamento de exceções no laravel
+     *
+     * @param [type] $request
+     * @param Throwable $e
+     * @return void
+     */
+    public function render($request, Throwable $e)
+    {
+        if ($request->is('api/*')) {
+            if ($e instanceof ValidationException) {
+                return response()->json([
+                    "status" => 400,
+                    "code" => "validation_error",
+                    "message" => "Erro de validação dos dados enviados"
+                ] + $e->errors(), 400);
+            }
+        }
+
+
+        return parent::render($request, $e);
     }
 }
