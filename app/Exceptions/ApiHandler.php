@@ -30,11 +30,12 @@ trait ApiHandler
      */
     protected function validationException(ValidationException $e): JsonResponse
     {
-        return response()->json([
-                "status" => 400,
-                "code" => "validation_error",
-                "message" => "Erro de validação dos dados enviados"
-            ] + $e->errors(), 400);
+        return resposta_padrao(
+            "Erro de validação dos dados enviados", 
+            "validation_error", 
+            400, 
+            $e->errors()
+        );
     }
 
     /**
@@ -45,10 +46,6 @@ trait ApiHandler
      */
     protected function genericException(\Throwable $e): JsonResponse
     {
-        return response()->json([
-            "status" => 500,
-            "code" => "internal_error",
-            "message" => "erro interno no servidor"
-        ], 500);
+        return resposta_padrao("erro interno no servidor", "internal_error", 500);
     }
 }
