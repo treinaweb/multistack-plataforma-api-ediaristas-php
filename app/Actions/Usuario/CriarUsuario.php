@@ -20,7 +20,7 @@ class CriarUsuario
         $dados['foto_documento'] = $fotoDocumento->store('local');
 
         $dados['password'] = Hash::make($dados['password']);
- 
+
         return User::create($dados);
     }
 }
