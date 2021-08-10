@@ -2,7 +2,9 @@
 
 namespace App\Observers;
 
+use App\Mail\UsuarioCadastrado;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 
 class UserObserver
 {
@@ -20,5 +22,16 @@ class UserObserver
         }
 
         $user->reputacao = User::avg('reputacao');
+    }
+
+    /**
+     * Envio do email de boas vindas para o usuário
+     *
+     * @param User $user
+     * @return void
+     */
+    public function created(User $user): void
+    {
+        Mail::to($user->email)->send(new UsuarioCadastrado);
     }
 }
