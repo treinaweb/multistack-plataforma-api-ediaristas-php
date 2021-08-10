@@ -28,6 +28,9 @@ class UsuarioCadastrado extends Mailable
      */
     public function build()
     {
-        return $this->view('email.mensagens.cadastro');
+        return $this
+            ->subject('Bem Vindo(a) ao E-Diaristas')
+            ->from('nao-responda@e-diaristas.com.br', "E-Diaristas")
+            ->view('email.mensagens.cadastro');
     }
 }
