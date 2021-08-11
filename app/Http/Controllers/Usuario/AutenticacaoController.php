@@ -34,4 +34,11 @@ class AutenticacaoController extends Controller
             'message' => "Successfully logged out"
         ]);
     }
+
+    public function refresh()
+    {
+        return response()->json([
+            'access' => Auth::refresh()
+        ]);
+    }
 }
