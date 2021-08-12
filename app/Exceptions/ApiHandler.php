@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 
@@ -17,6 +18,10 @@ trait ApiHandler
     {
         if ($e instanceof ValidationException) {
             return $this->validationException($e);
+        }
+
+        if ($e instanceof AuthenticationException) {
+            return $this->authenticationException($e);
         }
 
         return $this->genericException($e);
@@ -35,6 +40,21 @@ trait ApiHandler
             "validation_error", 
             400, 
             $e->errors()
+        );
+    }
+
+    /**
+     * Retorna uma resposta para o erro de autenticação
+     *
+     * @param AuthenticationException $e
+     * @return JsonResponse
+     */
+    protected function authenticationException(AuthenticationException $e): JsonResponse
+    {
+        return resposta_padrao(
+            $e->getMessage(), 
+            'token_not_valid', 
+            401
         );
     }
 
