@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers\Usuario;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\Usuario;
 use Illuminate\Http\Request;
+use App\Http\Resources\Usuario;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class AutenticacaoController extends Controller
 {
-    public function login(Request $request)
+    /**
+     * Realiza o login a partir do email e senha
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function login(Request $request): JsonResponse
     {
         $credenciais = $request->only(['email', 'password']);
 
@@ -20,12 +27,22 @@ class AutenticacaoController extends Controller
         return resposta_token($token);
     }
 
-    public function me()
+    /**
+     * Retorna os dados do usuário logado atualmente
+     *
+     * @return Usuario
+     */
+    public function me(): Usuario
     {
         return new Usuario(Auth::user());
     }
 
-    public function logout()
+    /**
+     * Invalida o token passado no header
+     *
+     * @return JsonResponse
+     */
+    public function logout(): JsonResponse
     {
         Auth::logout();
 
@@ -34,7 +51,12 @@ class AutenticacaoController extends Controller
         ]);
     }
 
-    public function refresh()
+    /**
+     * Renova o token enviado no header
+     *
+     * @return JsonResponse
+     */
+    public function refresh(): JsonResponse
     {
         return resposta_token(Auth::refresh());
     }
