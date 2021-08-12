@@ -13,7 +13,7 @@ Route::get('/', IndexController::class);
 
 Route::get('/me', [AutenticacaoController::class, 'me'])
     ->middleware('auth:api')
-    ->name('usuario.show');
+    ->name('usuarios.show');
 
 Route::get('/diaristas/localidades', ObtemDiaristasPorCEP::class)->name('diaristas.buca_por_cep');
 Route::get('/diaristas/disponibilidade', VerificaDisponibilidade::class)->name('enderecos.disponibilidade');
