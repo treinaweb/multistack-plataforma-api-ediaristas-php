@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Usuario;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +22,7 @@ class AutenticacaoController extends Controller
 
     public function me()
     {
-        return Auth::user();
+        return new Usuario(Auth::user());
     }
 
     public function logout()
