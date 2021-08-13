@@ -3,9 +3,18 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class Usuario extends JsonResource
 {
+    public function __construct(
+        $resource,
+        private string $token = ''
+    )
+    {
+        parent::__construct($resource);
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -14,7 +23,7 @@ class Usuario extends JsonResource
      */
     public function toArray($request): array
     {
-        return [
+        $formato = [
             "id" => $this->id,
             "nome_completo" => $this->nome_completo,
             "cpf" => $this->cpf,
@@ -24,7 +33,20 @@ class Usuario extends JsonResource
             "reputacao" => $this->reputacao,
             "tipo_usuario" => $this->tipo_usuario,
             "foto_usuario" => $this->foto_usuario,
-            "chave_pix" => null
+            "chave_pix" => null,
         ];
+
+        if ($this->token !== '') {
+            return $formato + [
+                "token" => [
+                    "access" => $this->token,
+                    "refresh" => $this->token,
+                    "token_type" => "bearer",
+                    "expires_in" => Auth::factory()->getTTL() * 60
+                ]
+            ];
+        }
+
+        return $formato;
     }
 }
