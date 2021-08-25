@@ -29,7 +29,9 @@ class CadastroController extends Controller
         CriarDiaria $criarDiaria
     )
     {
-        $criarDiaria->executar();
+        $diaria = $criarDiaria->executar($request->all());
+
+        return $diaria;
     }
 
     /**
