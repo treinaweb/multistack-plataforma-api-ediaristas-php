@@ -32,6 +32,8 @@ class TempoAtendimentoDiaria implements Rule
         if (! $servico) {
             return false;
         }
+
+
         
         $total = 0;
         $total += $this->request->quantidade_salas * $servico->horas_sala; 

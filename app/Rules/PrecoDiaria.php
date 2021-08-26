@@ -41,6 +41,10 @@ class PrecoDiaria implements Rule
         $total += $servico->valor_quintal * $this->request->quantidade_quintais;
         $total += $servico->valor_outros * $this->request->quantidade_outros; 
         
+        if ($value == $servico->valor_minimo && $total < $servico->valor_minimo) {
+            return true;
+        }
+
         return $total === $value;
     }
 
