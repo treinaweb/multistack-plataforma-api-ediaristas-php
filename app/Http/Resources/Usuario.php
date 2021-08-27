@@ -2,17 +2,16 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Hateoas\Usuario as HateoasUsuario;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Auth;
 
 class Usuario extends JsonResource
 {
     public function __construct(
         $resource,
         private string $token = ''
-    )
-    {
+    ) {
         parent::__construct($resource);
     }
 

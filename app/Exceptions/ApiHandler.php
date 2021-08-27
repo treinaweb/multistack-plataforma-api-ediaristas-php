@@ -70,6 +70,12 @@ trait ApiHandler
         );
     }
 
+    /**
+     * Retorna uma resposta para o erro de autorização
+     *
+     * @param AuthorizationException $e
+     * @return JsonResponse
+     */
     protected function authorizationException(
         AuthorizationException $e
     ): JsonResponse
