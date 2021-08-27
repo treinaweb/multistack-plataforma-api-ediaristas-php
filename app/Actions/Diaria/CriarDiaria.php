@@ -5,6 +5,7 @@ namespace App\Actions\Diaria;
 use App\Models\Diaria;
 use App\Models\Servico;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class CriarDiaria 
 {
@@ -16,6 +17,8 @@ class CriarDiaria
      */
     public function executar(array $dados)
     {
+        Gate::authorize('tipo-cliente');
+
         $dados['status'] = 1;
         $dados['servico_id'] = $dados['servico'];
         $dados['valor_comissao'] = $this->calculaComissao($dados);
