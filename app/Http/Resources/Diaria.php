@@ -20,9 +20,9 @@ class Diaria extends JsonResource
             "status" => $this->status,
 
             "valor_comissao" => $this->valor_comissao,
-            "nome_servico" => "Limpeza Fixa",
+            "nome_servico" => $this->servico->nome,
 
-            "cliente" => "Nome Cliente",
+            "cliente" => new UsuarioSimplificado($this->cliente),
 
             "data_atendimento" => Carbon::parse($this->data_atendimento)->toIso8601ZuluString(),
             "tempo_atendimento" => $this->tempo_atendimento,
