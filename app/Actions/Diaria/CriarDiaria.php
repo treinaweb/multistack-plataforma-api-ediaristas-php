@@ -6,9 +6,14 @@ use App\Models\Diaria;
 use App\Models\Servico;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Services\ConsultaCidade\Provedores\Ibge;
 
 class CriarDiaria 
 {
+    public function __construct(
+        private Ibge $consultaCidade
+    ){}
+
     /**
      * Cria a diária no banco de dados
      *
@@ -18,6 +23,8 @@ class CriarDiaria
     public function executar(array $dados)
     {
         Gate::authorize('tipo-cliente');
+
+        $this->consultaCidade->codigoIBGE($dados['codigo_ibge']);
 
         $dados['status'] = 1;
         $dados['servico_id'] = $dados['servico'];
