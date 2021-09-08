@@ -45,7 +45,7 @@ class PrecoDiaria implements Rule
             return true;
         }
 
-        return $total === $value;
+        return $total == $value;
     }
 
     /**
