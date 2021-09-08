@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Diaria\CadastroController as DiariaCadastroController;
+use App\Http\Controllers\Diaria\PagaDiaria;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Servico\ObtemServicos;
@@ -16,6 +17,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/me', [AutenticacaoController::class, 'me'])->name('usuarios.show');
 
     Route::post('/diarias', [DiariaCadastroController::class, 'store'])->name('diarias.store');
+    Route::post('/diarias/{diaria}/pagamentos', PagaDiaria::class)->name('diarias.pagar');
 });
 
 Route::get('/diaristas/localidades', ObtemDiaristasPorCEP::class)->name('diaristas.buca_por_cep');
