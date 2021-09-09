@@ -21,7 +21,9 @@ class PagaDiaria extends Controller
      */
     public function __invoke(Request $request, Diaria $diaria)
     {
-        $this->pagarDiaria->executar($diaria);
+        $request->validate(['card_hash' => 'required']);
+
+        $this->pagarDiaria->executar($diaria, $request->card_hash);
 
         return resposta_padrao('Diária paga com sucesso', 'success', 200);
     }

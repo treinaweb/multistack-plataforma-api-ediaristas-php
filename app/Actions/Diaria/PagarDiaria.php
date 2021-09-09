@@ -8,7 +8,14 @@ use Illuminate\Validation\ValidationException;
 
 class PagarDiaria
 {
-    public function executar(Diaria $diaria)
+    /**
+     * Executa o pagamento da diária
+     *
+     * @param Diaria $diaria
+     * @param string $cardHash
+     * @return boolean
+     */
+    public function executar(Diaria $diaria, string $cardHash): bool
     {
         $this->validaStatusDiaria($diaria);
         Gate::authorize('tipo-cliente');
@@ -16,7 +23,7 @@ class PagarDiaria
 
         //integração com gateway de pagamento
 
-        $diaria->pagar();
+        return $diaria->pagar();
     }
 
     /**
