@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Hateoas\Diaria as HateoasDiaria;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -51,8 +52,9 @@ class Diaria extends JsonResource
             "updated_at" => $this->updated_at,
 
             "servico" => $this->servico_id,
-            "diarista" => $this->diarista_id
+            "diarista" => $this->diarista_id,
 
+            "links" => (new HateoasDiaria)->links($this->resource)
         ];
     }
 }
