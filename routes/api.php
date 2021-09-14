@@ -16,6 +16,7 @@ Route::get('/', IndexController::class);
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/me', [AutenticacaoController::class, 'me'])->name('usuarios.show');
 
+    Route::get('/diarias', [DiariaCadastroController::class, 'index'])->name('diarias.index');
     Route::post('/diarias', [DiariaCadastroController::class, 'store'])->name('diarias.store');
     Route::post('/diarias/{diaria}/pagamentos', PagaDiaria::class)->name('diarias.pagar');
 });
