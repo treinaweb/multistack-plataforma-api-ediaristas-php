@@ -7,6 +7,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 trait ApiHandler
 {
@@ -18,6 +19,10 @@ trait ApiHandler
      */
     protected function getJsonException(\Throwable $e): JsonResponse
     {
+        if ($e instanceof ModelNotFoundException) {
+            return $this->notFoundException();
+        }
+
         if ($e instanceof ValidationException) {
             return $this->validationException($e);
         }
@@ -38,6 +43,20 @@ trait ApiHandler
     }
 
     /**
+     * Retorna uma resposta para erro de model não encontrado
+     *
+     * @return JsonResponse
+     */
+    protected function notFoundException(): JsonResponse
+    {
+        return resposta_padrao(
+            'Recurso não encontroado',
+            'not_found_error',
+            404
+        );
+    }
+
+    /**
      * Retornar uma resposta para erro de validação
      *
      * @param ValidationException $e
@@ -46,9 +65,9 @@ trait ApiHandler
     protected function validationException(ValidationException $e): JsonResponse
     {
         return resposta_padrao(
-            "Erro de validação dos dados enviados", 
-            "validation_error", 
-            400, 
+            "Erro de validação dos dados enviados",
+            "validation_error",
+            400,
             $e->errors()
         );
     }
@@ -61,11 +80,10 @@ trait ApiHandler
      */
     protected function authenticationException(
         AuthenticationException|TokenBlacklistedException $e
-    ): JsonResponse
-    {
+    ): JsonResponse {
         return resposta_padrao(
-            $e->getMessage(), 
-            'token_not_valid', 
+            $e->getMessage(),
+            'token_not_valid',
             401
         );
     }
@@ -78,8 +96,7 @@ trait ApiHandler
      */
     protected function authorizationException(
         AuthorizationException $e
-    ): JsonResponse
-    {
+    ): JsonResponse {
         return resposta_padrao(
             $e->getMessage(),
             'authorizarion_error',
@@ -95,6 +112,7 @@ trait ApiHandler
      */
     protected function genericException(\Throwable $e): JsonResponse
     {
+        dd($e);
         return resposta_padrao("erro interno no servidor", "internal_error", 500);
     }
 }
