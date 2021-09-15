@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 trait ApiHandler
 {
@@ -37,6 +38,10 @@ trait ApiHandler
 
         if ($e instanceof AuthorizationException) {
             return $this->authorizationException($e);
+        }
+
+        if ($e instanceof HttpException) {
+            return $this->httpException($e);
         }
 
         return $this->genericException($e);
@@ -105,6 +110,21 @@ trait ApiHandler
     }
 
     /**
+     * Retonar mensagens de erro HTTP
+     *
+     * @param HttpException $e
+     * @return JsonResponse
+     */
+    protected function httpException(HttpException $e): JsonResponse
+    {
+        return resposta_padrao(
+            $e->getMessage(),
+            'http_error',
+            $e->getStatusCode()
+        );
+    }
+
+    /**
      * Retorna uma resposta para erro genérico
      *
      * @param \Throwable $e
@@ -112,7 +132,6 @@ trait ApiHandler
      */
     protected function genericException(\Throwable $e): JsonResponse
     {
-        dd($e);
         return resposta_padrao("erro interno no servidor", "internal_error", 500);
     }
 }
