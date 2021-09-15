@@ -36,7 +36,7 @@ class AuthServiceProvider extends ServiceProvider
                 return $diaria->cliente_id === $user->id;
             }
 
-            return true;
+            return $diaria->diarista_id === $user->id;
         });
     }
 }

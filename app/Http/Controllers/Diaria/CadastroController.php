@@ -10,6 +10,7 @@ use App\Http\Resources\DiariaCollection;
 use App\Models\Diaria as ModelDiaria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class CadastroController extends Controller
 {
@@ -50,6 +51,8 @@ class CadastroController extends Controller
      */
     public function show(ModelDiaria $diaria)
     {
+        Gate::authorize('dono-diaria', $diaria);
+
         return new Diaria($diaria);
     }
 }
