@@ -13,11 +13,13 @@ use App\Http\Controllers\Usuario\AutenticacaoController;
 
 Route::get('/', IndexController::class);
 
-Route::group(['middleware' => 'auth:api'], function(){
+Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/me', [AutenticacaoController::class, 'me'])->name('usuarios.show');
 
     Route::get('/diarias', [DiariaCadastroController::class, 'index'])->name('diarias.index');
     Route::post('/diarias', [DiariaCadastroController::class, 'store'])->name('diarias.store');
+    Route::get('/diarias/{diaria}', [DiariaCadastroController::class, 'show'])->name('diarias.show');
+
     Route::post('/diarias/{diaria}/pagamentos', PagaDiaria::class)->name('diarias.pagar');
 });
 
