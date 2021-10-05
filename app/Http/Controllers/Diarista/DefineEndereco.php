@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Diarista;
 
+use \Illuminate\Http\Response;
 use App\Actions\Diarista\DefinirEndereco;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EnderecoDiaristaRequest;
@@ -14,12 +15,12 @@ class DefineEndereco extends Controller
     }
 
     /**
-     * Handle the incoming request.
+     * Define o endereço do usuário do tipo diarista
      *
-     * @param  EnderecoDiaristaRequest $request
-     * @return \Illuminate\Http\Response
+     * @param EnderecoDiaristaRequest $request
+     * @return Response
      */
-    public function __invoke(EnderecoDiaristaRequest $request)
+    public function __invoke(EnderecoDiaristaRequest $request): Response
     {
         $endereco = $this->definirEndereco->executar($request->except('id'));
 

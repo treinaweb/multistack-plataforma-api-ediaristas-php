@@ -31,6 +31,10 @@ class AuthServiceProvider extends ServiceProvider
             return $user->tipo_usuario == 1;
         });
 
+        Gate::define('tipo-diarista', function (User $user) {
+            return $user->tipo_usuario == 2;
+        });
+
         Gate::define('dono-diaria', function (User $user, Diaria $diaria) {
             if ($user->tipo_usuario == 1) {
                 return $diaria->cliente_id === $user->id;
