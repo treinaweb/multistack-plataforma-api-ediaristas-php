@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Diarista;
 
 use App\Actions\Diarista\DefinirCidadesAtendidas;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\CidadesAtendidasRequest;
+use Illuminate\Http\JsonResponse;
 
 class DefineCidadesAtendidas extends Controller
 {
@@ -14,13 +15,19 @@ class DefineCidadesAtendidas extends Controller
     }
 
     /**
-     * Handle the incoming request.
+     * Define as cidades atendidas pelo(a) diarista
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CidadesAtendidasRequest $request
+     * @return JsonResponse
      */
-    public function __invoke(Request $request)
+    public function __invoke(CidadesAtendidasRequest $request): JsonResponse
     {
         $this->definirCidadesAtendidas->executar($request->cidades);
+
+        return resposta_padrao(
+            'Cidades definidas com sucesso para o(a) diarista',
+            'success',
+            200
+        );
     }
 }
