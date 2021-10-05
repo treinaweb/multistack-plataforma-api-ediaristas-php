@@ -9,6 +9,12 @@ class Cidade extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'codigo_ibge',
+        'cidade',
+        'estado'
+    ];
+
     /**
      * Define a relação com os diaristas
      *
