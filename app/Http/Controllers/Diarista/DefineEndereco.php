@@ -21,6 +21,8 @@ class DefineEndereco extends Controller
      */
     public function __invoke(Request $request)
     {
-        $this->definirEndereco->executar();
+        $endereco = $this->definirEndereco->executar($request->except('id'));
+
+        return response($endereco, 200);
     }
 }
