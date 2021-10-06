@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Diarista;
 
 use \Illuminate\Http\Response;
-use App\Actions\Diarista\DefinirEndereco;
 use App\Http\Controllers\Controller;
+use App\Actions\Diarista\DefinirEndereco;
 use App\Http\Requests\EnderecoDiaristaRequest;
 
 class DefineEndereco extends Controller

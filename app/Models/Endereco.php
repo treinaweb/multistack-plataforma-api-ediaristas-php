@@ -11,8 +11,6 @@ class Endereco extends Model
 
     /**
      * define campos liberados para definição de dados em massa
-     *
-     * @var array
      */
     protected $fillable = [
         'logradouro',
@@ -25,6 +23,9 @@ class Endereco extends Model
         'user_id'
     ];
 
+    /**
+     * Defini os dados que serão serializados
+     */
     protected $visible = [
         'logradouro',
         'numero',

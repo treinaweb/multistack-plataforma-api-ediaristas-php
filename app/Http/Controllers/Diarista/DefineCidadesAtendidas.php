@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Diarista;
 
-use App\Actions\Diarista\DefinirCidadesAtendidas;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CidadesAtendidasRequest;
 use Illuminate\Http\JsonResponse;
+use App\Http\Requests\CidadesAtendidasRequest;
+use App\Actions\Diarista\DefinirCidadesAtendidas;
 
 class DefineCidadesAtendidas extends Controller
 {

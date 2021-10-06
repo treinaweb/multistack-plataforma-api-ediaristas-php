@@ -3,9 +3,9 @@
 namespace App\Actions\Diarista;
 
 use App\Models\Cidade;
-use App\Services\ConsultaCidade\ConsultaCidadeInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Services\ConsultaCidade\ConsultaCidadeInterface;
 
 class DefinirCidadesAtendidas
 {
@@ -14,7 +14,13 @@ class DefinirCidadesAtendidas
     ) {
     }
 
-    public function executar(array $cidades)
+    /**
+     * Define as cidades que o(a) diarista atende
+     *
+     * @param array $cidades
+     * @return array
+     */
+    public function executar(array $cidades): array
     {
         Gate::authorize('tipo-diarista');
 
@@ -37,6 +43,6 @@ class DefinirCidadesAtendidas
 
         $diarista = Auth::user();
 
-        $diarista->cidadesAtendidas()->sync($cidadesIds);
+        return $diarista->cidadesAtendidas()->sync($cidadesIds);
     }
 }

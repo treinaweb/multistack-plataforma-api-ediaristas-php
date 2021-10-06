@@ -4,10 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Services\ConsultaCEP\Providers\ViaCEP;
+use App\Services\ConsultaCidade\Provedores\Ibge;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Services\ConsultaCEP\ConsultaCEPInterface;
 use App\Services\ConsultaCidade\ConsultaCidadeInterface;
-use App\Services\ConsultaCidade\Provedores\Ibge;
 
 class AppServiceProvider extends ServiceProvider
 {
