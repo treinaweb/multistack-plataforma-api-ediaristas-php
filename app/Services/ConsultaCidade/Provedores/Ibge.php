@@ -3,10 +3,11 @@
 namespace App\Services\ConsultaCidade\Provedores;
 
 use App\Services\ConsultaCidade\CidadeResponse;
+use App\Services\ConsultaCidade\ConsultaCidadeInterface;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
 
-class Ibge
+class Ibge implements ConsultaCidadeInterface
 {
     public function codigoIBGE(int $codigo): CidadeResponse
     {
