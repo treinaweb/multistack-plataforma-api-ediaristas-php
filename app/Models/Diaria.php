@@ -79,4 +79,31 @@ class Diaria extends Model
             )
             ->get();
     }
+
+    /**
+     * Define um candidato(a) para a diária
+     *
+     * @param integer $diaristaId
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function defineCandidato(int $diaristaId)
+    {
+        return $this->candidatas()->create([
+            'diarista_id' => $diaristaId
+        ]);
+    }
+
+    /**
+     * Define o diarista para realizar a diária e 
+     * muda o status da diária para confirmado
+     *
+     * @param integer $diaristaId
+     * @return boolean
+     */
+    public function confirmar(int $diaristaId): bool
+    {
+        $this->diarista_id = $diaristaId;
+        $this->status = '3';
+        return $this->save();
+    }
 }
