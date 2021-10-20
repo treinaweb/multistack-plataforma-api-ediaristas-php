@@ -37,6 +37,16 @@ class Diaria extends Model
     }
 
     /**
+     * Define a relação com os candidatos a realizar a diária
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function candidatas()
+    {
+        return $this->hasMany(CandidatasDiaria::class);
+    }
+
+    /**
      * Define o status da diária como pago
      *
      * @return boolean
@@ -55,13 +65,12 @@ class Diaria extends Model
      */
     static public function todasDoUsuario(User $usuario): Collection
     {
-        return self::
-            when(
-                $usuario->tipo_usuario === 1,
-                function ($q) use ($usuario) {
-                    $q->where('cliente_id', $usuario->id);
-                }
-            )
+        return self::when(
+            $usuario->tipo_usuario === 1,
+            function ($q) use ($usuario) {
+                $q->where('cliente_id', $usuario->id);
+            }
+        )
             ->when(
                 $usuario->tipo_usuario === 2,
                 function ($q) use ($usuario) {
