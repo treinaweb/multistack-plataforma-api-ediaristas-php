@@ -2,10 +2,17 @@
 
 namespace App\Actions\Diaria\EscolheDiarista;
 
+use App\Models\Diaria;
+use Illuminate\Support\Facades\Auth;
+
 class CandidatarDiarista
 {
-    public function executar()
+    public function executar(Diaria $diaria)
     {
-        dd('cheguei na action');
+        $diaria->candidatas()->create([
+            'diarista_id' => Auth::user()->id
+        ]);
+
+        dd('depois da gravação');
     }
 }
