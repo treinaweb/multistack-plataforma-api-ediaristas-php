@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -113,6 +114,10 @@ class Diaria extends Model
 
         return self::where('status', '2')
             ->whereIn('codigo_ibge', $cidadesAtentidasPeloDiarista)
+            ->has('candidatas', '<', 3)
+            ->whereDoesntHave('candidatas', function (Builder $query) use ($diarista) {
+                $query->where('diarista_id', $diarista->id);
+            })
             ->get();
     }
 }
