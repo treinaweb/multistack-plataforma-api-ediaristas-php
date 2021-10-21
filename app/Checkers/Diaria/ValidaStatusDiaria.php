@@ -14,7 +14,7 @@ class ValidaStatusDiaria
      * @param integer $status
      * @return void
      */
-    public function executar(Diaria $diaria, int $status)
+    public function executar(Diaria $diaria, int $status): void
     {
         if ($diaria->status != $status) {
             throw ValidationException::withMessages([

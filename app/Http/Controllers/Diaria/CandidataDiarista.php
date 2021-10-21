@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Diaria;
 
-use App\Actions\Diaria\EscolheDiarista\CandidatarDiarista;
-use App\Http\Controllers\Controller;
 use App\Models\Diaria;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Actions\Diaria\EscolheDiarista\CandidatarDiarista;
+use Illuminate\Http\JsonResponse;
 
 class CandidataDiarista extends Controller
 {
@@ -15,12 +15,12 @@ class CandidataDiarista extends Controller
     }
 
     /**
-     * Handle the incoming request.
+     * Candidata um(a) diarista para reliazar uma diária
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Diaria $diaria
+     * @return JsonResponse
      */
-    public function __invoke(Diaria $diaria)
+    public function __invoke(Diaria $diaria): JsonResponse
     {
         $this->candidatarDiarista->executar($diaria);
 

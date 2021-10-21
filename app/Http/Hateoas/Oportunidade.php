@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Oportunidade extends HateoasBase implements HateoasInterface
 {
     /**
-     * Retonar o links do hateoas para a rota inicial
+     * Retonar o links do hateoas para oportunidade
      *
+     * @param Model|null $diaria
      * @return array
      */
     public function links(?Model $diaria = null): array

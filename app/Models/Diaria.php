@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -108,7 +108,13 @@ class Diaria extends Model
         return $this->save();
     }
 
-    static public function oportunidadesPorCidade(User $diarista)
+    /**
+     * Retorna a lista de oportunidade para o diarista
+     *
+     * @param User $diarista
+     * @return Collection
+     */
+    static public function oportunidadesPorCidade(User $diarista): Collection
     {
         $cidadesAtentidasPeloDiarista = $diarista->cidadesAtentidasDiarista();
 
