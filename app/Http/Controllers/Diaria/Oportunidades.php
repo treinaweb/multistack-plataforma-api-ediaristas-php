@@ -21,6 +21,6 @@ class Oportunidades extends Controller
      */
     public function __invoke(Request $request)
     {
-        $this->pegarOportunidades->executar();
+        return $this->pegarOportunidades->executar();
     }
 }

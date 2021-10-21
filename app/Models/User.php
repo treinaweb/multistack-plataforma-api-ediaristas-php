@@ -102,9 +102,9 @@ class User extends Authenticatable implements JWTSubject
     public function scopeDiaristasAtendeCidade(Builder $query, int $codigoIbge): Builder
     {
         return $query->diarista()
-                    ->whereHas('cidadesAtendidas', function($q) use ($codigoIbge) {
-                        $q->where('codigo_ibge', $codigoIbge);
-                    });
+            ->whereHas('cidadesAtendidas', function ($q) use ($codigoIbge) {
+                $q->where('codigo_ibge', $codigoIbge);
+            });
     }
 
     /**
@@ -127,5 +127,15 @@ class User extends Authenticatable implements JWTSubject
     static public function diaristasDisponivelCidadeTotal(int $codigoIbge): int
     {
         return User::diaristasAtendeCidade($codigoIbge)->count();
+    }
+
+    /**
+     * Retorna as cidades atentidas pelo(a) diarista
+     *
+     * @return array
+     */
+    public function cidadesAtentidasDiarista(): array
+    {
+        return $this->cidadesAtendidas()->pluck('codigo_ibge')->toArray();
     }
 }

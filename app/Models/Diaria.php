@@ -106,4 +106,13 @@ class Diaria extends Model
         $this->status = '3';
         return $this->save();
     }
+
+    static public function oportunidadesPorCidade(User $diarista)
+    {
+        $cidadesAtentidasPeloDiarista = $diarista->cidadesAtentidasDiarista();
+
+        return self::where('status', '2')
+            ->whereIn('codigo_ibge', $cidadesAtentidasPeloDiarista)
+            ->get();
+    }
 }
