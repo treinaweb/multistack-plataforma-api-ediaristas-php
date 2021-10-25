@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ConsultaDistancia\Provedores\GoogleMatrix;
 use Illuminate\Http\Request;
-use TeamPickr\DistanceMatrix\Frameworks\Laravel\DistanceMatrix;
-use TeamPickr\DistanceMatrix\Licenses\StandardLicense;
+
 
 class Teste extends Controller
 {
+    public function __construct(
+        private GoogleMatrix $consultaDistancia
+    ) {
+    }
+
     /**
      * Handle the incoming request.
      *
@@ -16,12 +21,7 @@ class Teste extends Controller
      */
     public function __invoke(Request $request)
     {
-        $license = new StandardLicense('AIzaSyDf0_-4zDU3LPk7BMefAf617ot0GUXNy54');
-
-        $response = DistanceMatrix::license($license)
-            ->addOrigin('09715-340')
-            ->addDestination('02221-000')
-            ->request();
+        $response = $this->consultaDistancia->distanciaEntreDoisCeps('09715-340', '02221-000');
 
         dd($response);
     }
