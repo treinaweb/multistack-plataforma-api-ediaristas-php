@@ -2,28 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Diaria;
 use App\Services\ConsultaDistancia\ConsultaDistanciaInterface;
 use App\Services\ConsultaDistancia\Provedores\GoogleMatrix;
+use App\Tasks\Diarista\SelecionaDiaristaIndice;
 use Illuminate\Http\Request;
 
 
 class Teste extends Controller
 {
-    public function __construct(
-        private ConsultaDistanciaInterface $consultaDistancia
-    ) {
-    }
-
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
+    public function __invoke(SelecionaDiaristaIndice $selecionaDiarista)
     {
-        $response = $this->consultaDistancia->distanciaEntreDoisCeps('12345678', '02221000');
+        $diaria = Diaria::find(68);
 
-        dd($response);
+        $selecionaDiarista->executar($diaria);
     }
 }
