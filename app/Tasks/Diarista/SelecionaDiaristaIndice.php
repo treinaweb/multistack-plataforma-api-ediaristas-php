@@ -24,10 +24,14 @@ class SelecionaDiaristaIndice
 
         foreach ($diaria->candidatas as $candidata) {
 
-            $distancia = $this->consultaDistancia->distanciaEntreDoisCeps(
-                $candidata->candidata->enderecoDiarista->cep,
-                $diaria->cep
-            );
+            try {
+                $distancia = $this->consultaDistancia->distanciaEntreDoisCeps(
+                    $candidata->candidata->enderecoDiarista->cep,
+                    $diaria->cep
+                );
+            } catch (\Throwable $th) {
+                continue;
+            }
 
             $reputacao = $candidata->candidata->reputacao;
 
