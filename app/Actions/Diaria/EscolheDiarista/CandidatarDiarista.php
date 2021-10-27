@@ -8,12 +8,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\Model;
 use App\Checkers\Diaria\ValidaStatusDiaria;
+use App\Tasks\Diarista\SelecionaDiaristaIndice;
 use Illuminate\Validation\ValidationException;
 
 class CandidatarDiarista
 {
     public function __construct(
-        private ValidaStatusDiaria $validaStatusDiaria
+        private ValidaStatusDiaria $validaStatusDiaria,
+        private SelecionaDiaristaIndice $selecionaDiarista
     ) {
     }
 
@@ -34,7 +36,9 @@ class CandidatarDiarista
         if ($this->criadaAMenosDe24Horas($diaria)) {
             $this->verificaDuplicidadeDeCandidato($diaria);
 
-            return $diaria->defineCandidato($diaristaId);
+            $diaria->defineCandidato($diaristaId);
+
+            return $this->selecicionaDiaristaInstantaneamente($diaria);
         }
 
         return $diaria->confirmar($diaristaId);
@@ -71,5 +75,24 @@ class CandidatarDiarista
         $quantidadeDehorasDesdeACriacao = $dataCriacaoDiaria->diffInHours(Carbon::now(), false);
 
         return $quantidadeDehorasDesdeACriacao < 24;
+    }
+
+    /**
+     * Seleciona diariasta automaticamente quando for o terceiro candidato
+     *
+     * @param Diaria $diaria
+     * @return boolean
+     */
+    public function selecicionaDiaristaInstantaneamente(Diaria $diaria): bool
+    {
+        $quantidadeCandidatas = $diaria->candidatas()->count();
+
+        if ($quantidadeCandidatas === 3) {
+            return $diaria->confirmar(
+                $this->selecionaDiarista->executar($diaria)
+            );
+        }
+
+        return false;
     }
 }
