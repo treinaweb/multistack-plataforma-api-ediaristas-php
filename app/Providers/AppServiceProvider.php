@@ -8,6 +8,9 @@ use App\Services\ConsultaCidade\Provedores\Ibge;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Services\ConsultaCEP\ConsultaCEPInterface;
 use App\Services\ConsultaCidade\ConsultaCidadeInterface;
+use App\Services\ConsultaDistancia\ConsultaDistanciaInterface;
+use App\Services\ConsultaDistancia\Provedores\GoogleMatrix;
+use TeamPickr\DistanceMatrix\Licenses\StandardLicense;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +27,12 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(ConsultaCidadeInterface::class, function ($app) {
             return new Ibge;
+        });
+
+        $this->app->bind(ConsultaDistanciaInterface::class, function ($app) {
+            $license = new StandardLicense(config('google.key'));
+
+            return new GoogleMatrix($license);
         });
     }
 

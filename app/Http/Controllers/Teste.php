@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ConsultaDistancia\ConsultaDistanciaInterface;
 use App\Services\ConsultaDistancia\Provedores\GoogleMatrix;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,7 @@ use Illuminate\Http\Request;
 class Teste extends Controller
 {
     public function __construct(
-        private GoogleMatrix $consultaDistancia
+        private ConsultaDistanciaInterface $consultaDistancia
     ) {
     }
 
