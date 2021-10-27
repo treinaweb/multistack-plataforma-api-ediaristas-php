@@ -12,25 +12,33 @@ class SelecionaDiaristaIndice
     ) {
     }
 
+    /**
+     * Retorna o id da melhor candidata para a diária
+     *
+     * @param Diaria $diaria
+     * @return integer
+     */
     public function executar(Diaria $diaria): int
     {
+        $maiorIndice = 0;
+
         foreach ($diaria->candidatas as $candidata) {
 
-            //a distancia entre a casa do candidato e a casa do cliente
             $distancia = $this->consultaDistancia->distanciaEntreDoisCeps(
                 $candidata->candidata->enderecoDiarista->cep,
                 $diaria->cep
             );
 
-            var_dump($distancia);
+            $reputacao = $candidata->candidata->reputacao;
 
-            //a reputação do candidato
+            $indiceCandidataAtual = ($reputacao - ($distancia->distanciaEmQuilometros / 10)) / 2;
 
-            //fazer o calculo do indice do melhor candidato
+            if ($indiceCandidataAtual > $maiorIndice) {
+                $diaristaEscolhidaId = $candidata->candidata->id;
+                $maiorIndice = $indiceCandidataAtual;
+            }
         }
 
-        dd('depois do loop');
-
-        return 1;
+        return $diaristaEscolhidaId;
     }
 }

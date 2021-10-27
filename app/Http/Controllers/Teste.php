@@ -15,6 +15,8 @@ class Teste extends Controller
     {
         $diaria = Diaria::find(68);
 
-        $selecionaDiarista->executar($diaria);
+        $diaristaEscolhidoId = $selecionaDiarista->executar($diaria);
+
+        dd($diaristaEscolhidoId);
     }
 }
