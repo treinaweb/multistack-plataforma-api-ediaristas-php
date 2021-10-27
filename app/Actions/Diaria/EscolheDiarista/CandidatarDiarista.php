@@ -30,6 +30,7 @@ class CandidatarDiarista
     {
         Gate::authorize('tipo-diarista');
         $this->validaStatusDiaria->executar($diaria, 2);
+        $this->verificaEnderecoDiarista();
 
         $diaristaId = Auth::user()->id;
 
@@ -43,6 +44,23 @@ class CandidatarDiarista
 
         return $diaria->confirmar($diaristaId);
     }
+
+    /**
+     * Verifica se o diarista tem endereço cadastrado
+     *
+     * @return void
+     */
+    private function verificaEnderecoDiarista(): void
+    {
+        $quantidadeEndereco = Auth::user()->enderecoDiarista()->count();
+
+        if ($quantidadeEndereco === 0) {
+            throw ValidationException::withMessages([
+                'endereco_diarista' => 'O diarista deve ter o endereço cadastrado'
+            ]);
+        }
+    }
+
 
     /**
      * Verifica se o usuário já está candidatado para a diária
