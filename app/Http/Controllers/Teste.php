@@ -22,7 +22,7 @@ class Teste extends Controller
      */
     public function __invoke(Request $request)
     {
-        $response = $this->consultaDistancia->distanciaEntreDoisCeps('09715340', '02221000');
+        $response = $this->consultaDistancia->distanciaEntreDoisCeps('12345678', '02221000');
 
         dd($response);
     }

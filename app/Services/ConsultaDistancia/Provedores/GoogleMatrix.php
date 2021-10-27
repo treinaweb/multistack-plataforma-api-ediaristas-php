@@ -4,8 +4,10 @@ namespace App\Services\ConsultaDistancia\Provedores;
 
 use App\Services\ConsultaDistancia\ConsultaDistanciaInterface;
 use App\Services\ConsultaDistancia\DistanciaResponse;
+use App\Services\ConsultaDistancia\EnderecoNaoEncontratoException;
 use TeamPickr\DistanceMatrix\Licenses\StandardLicense;
 use TeamPickr\DistanceMatrix\Frameworks\Laravel\DistanceMatrix;
+use TeamPickr\DistanceMatrix\Response\DistanceMatrixResponse;
 
 class GoogleMatrix implements ConsultaDistanciaInterface
 {
@@ -20,6 +22,8 @@ class GoogleMatrix implements ConsultaDistanciaInterface
             ->addOrigin($this->formataCep($origem))
             ->addDestination($this->formataCep($destino))
             ->request();
+
+        $this->verificaResposta($response);
 
         return new DistanciaResponse(
             $response->json['rows'][0]['elements'][0]['distance']['value'] / 1000
@@ -53,6 +57,21 @@ class GoogleMatrix implements ConsultaDistanciaInterface
 
         if (!preg_match('/^[0-9]+$/', $cep)) {
             throw new \Exception("O cep deve ter apenas números", 1);
+        }
+    }
+
+    /**
+     * Verifica se o calculo de distancia foi realizado corretamente
+     *
+     * @param DistanceMatrixResponse $response
+     * @return void
+     */
+    private function verificaResposta(DistanceMatrixResponse $response): void
+    {
+        $status = $response->json['rows'][0]['elements'][0]['status'];
+
+        if ($status !== 'OK') {
+            throw new EnderecoNaoEncontratoException;
         }
     }
 }
