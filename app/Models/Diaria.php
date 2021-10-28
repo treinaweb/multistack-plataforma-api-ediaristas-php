@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -124,6 +125,20 @@ class Diaria extends Model
             ->whereDoesntHave('candidatas', function (Builder $query) use ($diarista) {
                 $query->where('diarista_id', $diarista->id);
             })
+            ->get();
+    }
+
+    /**
+     * Retorna todas as diárias pagas com mais de 24 horas de criação
+     *
+     * @return Collection
+     */
+    static public function pagasComMaisDe24Horas(): Collection
+    {
+        return self::where('status', 2)
+            ->where('created_at', '<', Carbon::now()->subHours(24))
+            ->with('candidatas', 'candidatas.candidata.enderecoDiarista')
+            ->withCount('candidatas')
             ->get();
     }
 }
