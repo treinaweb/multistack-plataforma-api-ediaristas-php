@@ -12,7 +12,13 @@ class SelecionaAutomaticamente
     ) {
     }
 
-    public function executar()
+    /**
+     * Busca as diárias pagas com mais de 24 horas de criação
+     * e escolhe o(a) diarista mais apropriado(a)
+     *
+     * @return void
+     */
+    public function executar(): void
     {
         $diarias = Diaria::pagasComMaisDe24Horas();
 

@@ -2,12 +2,13 @@
 
 namespace App\Services\ConsultaDistancia\Provedores;
 
-use App\Services\ConsultaDistancia\ConsultaDistanciaInterface;
 use App\Services\ConsultaDistancia\DistanciaResponse;
-use App\Services\ConsultaDistancia\EnderecoNaoEncontratoException;
 use TeamPickr\DistanceMatrix\Licenses\StandardLicense;
-use TeamPickr\DistanceMatrix\Frameworks\Laravel\DistanceMatrix;
 use TeamPickr\DistanceMatrix\Response\DistanceMatrixResponse;
+use App\Services\ConsultaDistancia\ConsultaDistanciaInterface;
+use TeamPickr\DistanceMatrix\Frameworks\Laravel\DistanceMatrix;
+use App\Services\ConsultaDistancia\EnderecoNaoEncontratoException;
+
 
 class GoogleMatrix implements ConsultaDistanciaInterface
 {
@@ -16,6 +17,13 @@ class GoogleMatrix implements ConsultaDistanciaInterface
     ) {
     }
 
+    /**
+     * Retorna a distancia entre dois ceps
+     *
+     * @param string $origem
+     * @param string $destino
+     * @return DistanciaResponse
+     */
     public function distanciaEntreDoisCeps(string $origem, string $destino): DistanciaResponse
     {
         $response = DistanceMatrix::license($this->license)

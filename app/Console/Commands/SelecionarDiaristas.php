@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\Diaria\EscolheDiarista\SelecionaAutomaticamente;
 use Illuminate\Console\Command;
+use App\Actions\Diaria\EscolheDiarista\SelecionaAutomaticamente;
 
 class SelecionarDiaristas extends Command
 {
@@ -33,7 +33,8 @@ class SelecionarDiaristas extends Command
     }
 
     /**
-     * Execute the console command.
+     * Busca as diárias pagas com mais de 24 horas de criação
+     * e escolhe o(a) diarista mais apropriado(a)
      *
      * @return int
      */

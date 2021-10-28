@@ -5,6 +5,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Diaria\PagaDiaria;
 use App\Http\Controllers\Diaria\Oportunidades;
 use App\Http\Controllers\Servico\ObtemServicos;
+use App\Http\Controllers\Diaria\ConfirmaPresenca;
 use App\Http\Controllers\Diarista\DefineEndereco;
 use App\Http\Controllers\Diaria\CandidataDiarista;
 use App\Http\Controllers\Usuario\CadastroController;
@@ -14,10 +15,6 @@ use App\Http\Controllers\Usuario\AutenticacaoController;
 use App\Http\Controllers\Diarista\DefineCidadesAtendidas;
 use App\Http\Controllers\Diarista\VerificaDisponibilidade;
 use App\Http\Controllers\Diaria\CadastroController as DiariaCadastroController;
-use App\Http\Controllers\Diaria\ConfirmaPresenca;
-use App\Http\Controllers\Teste;
-
-Route::get('/teste', Teste::class);
 
 Route::get('/', IndexController::class);
 

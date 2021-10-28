@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\Model;
 use App\Checkers\Diaria\ValidaStatusDiaria;
-use App\Tasks\Diarista\SelecionaDiaristaIndice;
 use Illuminate\Validation\ValidationException;
+use App\Tasks\Diarista\SelecionaDiaristaIndice;
 
 class CandidatarDiarista
 {

@@ -13,7 +13,7 @@ class SelecionaDiaristaIndice
     }
 
     /**
-     * Retorna o id da melhor candidata para a diária
+     * Retorna o id do(a) melhor candidato(a) para a diária
      *
      * @param Diaria $diaria
      * @return integer
