@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Actions\Diaria\EscolheDiarista\SelecionaAutomaticamente;
 use Illuminate\Console\Command;
 
 class SelecionarDiaristas extends Command
@@ -25,8 +26,9 @@ class SelecionarDiaristas extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(
+        private SelecionaAutomaticamente $selecionaAutomaticamente
+    ) {
         parent::__construct();
     }
 
@@ -37,7 +39,7 @@ class SelecionarDiaristas extends Command
      */
     public function handle()
     {
-        dd('Estou no comando!!!!');
+        $this->selecionaAutomaticamente->executar();
 
         return 0;
     }
