@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Diaria;
 
 use App\Actions\Diaria\AvaliarDiaria;
 use App\Http\Controllers\Controller;
+use App\Models\Diaria;
 use Illuminate\Http\Request;
 
 class AvaliaDiaria extends Controller
@@ -13,8 +14,9 @@ class AvaliaDiaria extends Controller
     ) {
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Diaria $diaria, Request $request)
     {
-        $this->avaliarDiaria->executar();
+
+        $this->avaliarDiaria->executar($diaria, $request->all());
     }
 }

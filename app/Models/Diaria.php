@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Diaria extends Model
 {
@@ -56,6 +57,16 @@ class Diaria extends Model
     public function candidatas()
     {
         return $this->hasMany(CandidatasDiaria::class);
+    }
+
+    /**
+     * Define a relação com as avaliações do cliente e diarista
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function avaliacoes(): HasMany
+    {
+        return $this->hasMany(Avaliacao::class);
     }
 
     /**
