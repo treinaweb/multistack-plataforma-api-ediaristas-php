@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -90,6 +91,16 @@ class User extends Authenticatable implements JWTSubject
     public function enderecoDiarista(): HasOne
     {
         return $this->hasOne(Endereco::class, 'user_id');
+    }
+
+    /**
+     * Define a relação com a avaliação onde o usuário foi avaliado
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function avaliado(): HasMany
+    {
+        return $this->hasMany(Avaliacao::class, 'avaliado_id');
     }
 
     /**
