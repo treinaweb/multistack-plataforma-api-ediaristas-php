@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Diaria\AvaliaDiaria;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Diaria\PagaDiaria;
@@ -34,6 +35,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/oportunidades', Oportunidades::class)->name('oportunidades.index');
 
     Route::patch('/diarias/{diaria}/presenca', ConfirmaPresenca::class)->name('diarias.confirmar');
+    Route::patch('/diarias/{diaria}/avaliacoes', AvaliaDiaria::class)->name('diarias.avaliar');
 });
 
 Route::get('/diaristas/localidades', ObtemDiaristasPorCEP::class)->name('diaristas.buca_por_cep');
