@@ -4,7 +4,7 @@ namespace App\Tasks\Usuario;
 
 use App\Models\User;
 
-class CalculaReputacao
+class AtualizaReputacao
 {
     /**
      * Calcula a reputação do usuário e salva na tabela de usuário
