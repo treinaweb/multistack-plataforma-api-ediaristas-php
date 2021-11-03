@@ -4,6 +4,7 @@ namespace App\Actions\Diaria;
 
 use App\Models\Diaria;
 use Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\Types\This;
 
 class AvaliarDiaria
 {
@@ -21,9 +22,25 @@ class AvaliarDiaria
             $dadosAvaliacao + [
                 'visibilidade' => 1,
                 'avaliador_id' => Auth::user()->id,
-
-                'avaliado_id' => 17 //vamos definir dinamicamente depois
+                'avaliado_id' => $this->obtemUsuarioAvaliadoID($diaria)
             ]
         );
+    }
+
+    /**
+     * Retorna o id do usuário que está sendo avaliado
+     *
+     * @param Diaria $diaria
+     * @return integer
+     */
+    private function obtemUsuarioAvaliadoID(Diaria $diaria): int
+    {
+        $tipoUsuarioLogado = Auth::user()->tipo_usuario;
+
+        if ($tipoUsuarioLogado == 1) {
+            return $diaria->diarista_id;
+        }
+
+        return $diaria->cliente_id;
     }
 }
