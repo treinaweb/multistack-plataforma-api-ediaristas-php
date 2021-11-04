@@ -162,4 +162,15 @@ class Diaria extends Model
             ->withCount('candidatas')
             ->get();
     }
+
+    /**
+     * verifica se o usuário já avaliou a diária
+     *
+     * @param integer $usuarioId
+     * @return boolean
+     */
+    public function usuarioJaAvaliou(int $usuarioId): bool
+    {
+        return !!$this->avaliacoes()->where('avaliador_id', $usuarioId)->first();
+    }
 }
