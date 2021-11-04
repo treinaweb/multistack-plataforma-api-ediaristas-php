@@ -2,13 +2,13 @@
 
 namespace App\Actions\Diaria;
 
-use App\Checkers\Diaria\ValidaStatusDiaria;
 use App\Models\Diaria;
-use App\Tasks\Usuario\AtualizaReputacao;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Tasks\Usuario\AtualizaReputacao;
+use App\Checkers\Diaria\ValidaStatusDiaria;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\ValidationException;
-use phpDocumentor\Reflection\Types\This;
 
 class AvaliarDiaria
 {
@@ -18,7 +18,14 @@ class AvaliarDiaria
     ) {
     }
 
-    public function executar(Diaria $diaria, array $dadosAvaliacao)
+    /**
+     * Define a avaliação do usuário logado para a diária
+     *
+     * @param Diaria $diaria
+     * @param array $dadosAvaliacao
+     * @return void
+     */
+    public function executar(Diaria $diaria, array $dadosAvaliacao): void
     {
         Gate::authorize('dono-diaria', $diaria);
         $this->validaStatusDiaria->executar($diaria, 4);
@@ -31,8 +38,6 @@ class AvaliarDiaria
         );
 
         $this->defineStatusAvalido($diaria);
-
-        dd('cheguei na action', $diaria, $dadosAvaliacao);
     }
 
     /**
@@ -54,7 +59,14 @@ class AvaliarDiaria
         }
     }
 
-    private function criaAvaliacao(Diaria $diaria, array $dadosAvaliacao)
+    /**
+     * Cria uma avaliação para a diária
+     *
+     * @param Diaria $diaria
+     * @param array $dadosAvaliacao
+     * @return Model
+     */
+    private function criaAvaliacao(Diaria $diaria, array $dadosAvaliacao): Model
     {
         return $diaria->avaliacoes()->create(
             $dadosAvaliacao + [

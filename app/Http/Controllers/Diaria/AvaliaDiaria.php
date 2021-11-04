@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Diaria;
 
-use App\Actions\Diaria\AvaliarDiaria;
-use App\Http\Controllers\Controller;
 use App\Models\Diaria;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use App\Actions\Diaria\AvaliarDiaria;
 
 class AvaliaDiaria extends Controller
 {
@@ -14,7 +15,14 @@ class AvaliaDiaria extends Controller
     ) {
     }
 
-    public function __invoke(Diaria $diaria, Request $request)
+    /**
+     * Define a avaliação do usuário logado para a diária
+     *
+     * @param Diaria $diaria
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function __invoke(Diaria $diaria, Request $request): JsonResponse
     {
         $request->validate([
             'nota' => ['required', 'integer', 'min:0', 'max:5'],
@@ -22,5 +30,7 @@ class AvaliaDiaria extends Controller
         ]);
 
         $this->avaliarDiaria->executar($diaria, $request->all());
+
+        return resposta_padrao('diaria avaliada com sucesso', 'success', 200);
     }
 }
