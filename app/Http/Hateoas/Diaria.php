@@ -20,6 +20,7 @@ class Diaria extends HateoasBase implements HateoasInterface
 
         $this->linkPagar($diaria);
         $this->linkConfirmar($diaria);
+        $this->linkAvaliar($diaria);
 
         return $this->links;
     }
@@ -56,6 +57,24 @@ class Diaria extends HateoasBase implements HateoasInterface
 
         if ($depoisDataAtendimento && $diariaConfirmada && $usuarioTipoCliente) {
             $this->adicionaLink('PATCH', 'confirmar_diarista', 'diarias.confirmar', [
+                'diaria' => $diaria->id
+            ]);
+        }
+    }
+
+    /**
+     * Defini o link para avaliar a diária
+     *
+     * @param Model $diaria
+     * @return void
+     */
+    private function linkAvaliar(Model $diaria): void
+    {
+        $usuarioNaoAvaliou = !$diaria->usuarioJaAvaliou(Auth::user()->id);
+        $diariaConcluida = $diaria->status == 4;
+
+        if ($diariaConcluida && $usuarioNaoAvaliou) {
+            $this->adicionaLink('PATCH', 'avaliar_diaria', 'diarias.avaliar', [
                 'diaria' => $diaria->id
             ]);
         }
