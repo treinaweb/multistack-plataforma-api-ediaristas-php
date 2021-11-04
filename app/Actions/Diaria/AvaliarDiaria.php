@@ -30,6 +30,8 @@ class AvaliarDiaria
             $this->obtemUsuarioAvaliadoID($diaria)
         );
 
+        $this->defineStatusAvalido($diaria);
+
         dd('cheguei na action', $diaria, $dadosAvaliacao);
     }
 
@@ -78,5 +80,23 @@ class AvaliarDiaria
         }
 
         return $diaria->cliente_id;
+    }
+
+    /**
+     * muda o status da diária para avaliado 
+     * quando as duas partes já realizaram a avaliação
+     *
+     * @param Diaria $diaria
+     * @return boolean
+     */
+    private function defineStatusAvalido(Diaria $diaria): bool
+    {
+        $quantidadeAvaliacoes = $diaria->avaliacoes()->count();
+
+        if ($quantidadeAvaliacoes == 2) {
+            return $diaria->update(['status' => '6']);
+        }
+
+        return false;
     }
 }
