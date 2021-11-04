@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Avaliacao extends Model
 {
@@ -29,4 +30,14 @@ class Avaliacao extends Model
         'avaliado_id',
         'diaria_id'
     ];
+
+    /**
+     * Define a relação com o usuário avaliador
+     *
+     * @return BelongsTo
+     */
+    public function avaliador(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'avaliador_id');
+    }
 }
