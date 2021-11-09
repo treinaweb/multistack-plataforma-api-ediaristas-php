@@ -10,6 +10,9 @@ use App\Services\ConsultaCEP\ConsultaCEPInterface;
 use App\Services\ConsultaCidade\ConsultaCidadeInterface;
 use App\Services\ConsultaDistancia\ConsultaDistanciaInterface;
 use App\Services\ConsultaDistancia\Provedores\GoogleMatrix;
+use App\Services\Pagamento\PagamentoInterface;
+use App\Services\Pagamento\Provedores\Pagarme;
+use PagarMe\Client;
 use TeamPickr\DistanceMatrix\Licenses\StandardLicense;
 
 class AppServiceProvider extends ServiceProvider
@@ -33,6 +36,12 @@ class AppServiceProvider extends ServiceProvider
             $license = new StandardLicense(config('google.key'));
 
             return new GoogleMatrix($license);
+        });
+
+        $this->app->singleton(PagamentoInterface::class, function ($app) {
+            $pagarmeSDK = new Client(config('services.pagarme.key'));
+
+            return new Pagarme($pagarmeSDK);
         });
     }
 
