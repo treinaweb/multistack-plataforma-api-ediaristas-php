@@ -2,18 +2,19 @@
 
 namespace App\Providers;
 
+use PagarMe\Client;
+
 use Illuminate\Support\ServiceProvider;
+use App\Services\Pagamento\PagamentoInterface;
+use App\Services\Pagamento\Provedores\Pagarme;
 use App\Services\ConsultaCEP\Providers\ViaCEP;
 use App\Services\ConsultaCidade\Provedores\Ibge;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Services\ConsultaCEP\ConsultaCEPInterface;
-use App\Services\ConsultaCidade\ConsultaCidadeInterface;
-use App\Services\ConsultaDistancia\ConsultaDistanciaInterface;
-use App\Services\ConsultaDistancia\Provedores\GoogleMatrix;
-use App\Services\Pagamento\PagamentoInterface;
-use App\Services\Pagamento\Provedores\Pagarme;
-use PagarMe\Client;
 use TeamPickr\DistanceMatrix\Licenses\StandardLicense;
+use App\Services\ConsultaCidade\ConsultaCidadeInterface;
+use App\Services\ConsultaDistancia\Provedores\GoogleMatrix;
+use App\Services\ConsultaDistancia\ConsultaDistanciaInterface;
 
 class AppServiceProvider extends ServiceProvider
 {

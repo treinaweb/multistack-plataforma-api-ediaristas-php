@@ -2,11 +2,11 @@
 
 namespace App\Actions\Diaria;
 
-use App\Checkers\Diaria\ValidaStatusDiaria;
 use App\Models\Diaria;
-use App\Services\Pagamento\PagamentoInterface;
-use App\Services\Pagamento\TransacaoResponse;
 use Illuminate\Support\Facades\Gate;
+use App\Checkers\Diaria\ValidaStatusDiaria;
+use App\Services\Pagamento\TransacaoResponse;
+use App\Services\Pagamento\PagamentoInterface;
 use Illuminate\Validation\ValidationException;
 
 class PagarDiaria

@@ -19,7 +19,6 @@ use App\Http\Controllers\Diaria\CadastroController as DiariaCadastroController;
 use App\Http\Controllers\Teste;
 
 Route::get('/', IndexController::class);
-Route::get('/teste', Teste::class);
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/me', [AutenticacaoController::class, 'me'])->name('usuarios.show');
