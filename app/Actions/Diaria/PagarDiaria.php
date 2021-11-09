@@ -57,11 +57,19 @@ class PagarDiaria
      */
     private function realizaTrasancaoComGateway(Diaria $diaria, string $cardHash): TransacaoResponse
     {
-        return $this->pagamento->pagar([
-            'amount' => intval($diaria->preco * 100),
-            'card_hash' => $cardHash,
-            'async' => false
-        ]);
+        try {
+            $transacao = $this->pagamento->pagar([
+                'amount' => intval($diaria->preco * 100),
+                'card_hash' => $cardHash,
+                'async' => false
+            ]);
+        } catch (\Throwable $exception) {
+            throw ValidationException::withMessages([
+                'pagamento' => $exception->getMessage()
+            ]);
+        }
+
+        return $transacao;
     }
 
     /**
