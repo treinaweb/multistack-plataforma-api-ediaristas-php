@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Pagamento\PagamentoInterface;
 use Illuminate\Http\Request;
-use PagarMe\Client;
 
 class Teste extends Controller
 {
+    public function __construct(
+        private PagamentoInterface $pagamentoServico
+    ) {
+    }
+
     /**
      * Handle the incoming request.
      *
@@ -15,14 +20,14 @@ class Teste extends Controller
      */
     public function __invoke(Request $request)
     {
-        $pagarme = new Client('ak_test_nE14ZiG433nQG0D3aR0XhpzCj4iPkR');
-
-        $transaction = $pagarme->transactions()->create([
-            'amount' => '2000',
-            'card_hash' => '4658941_v0FrQgy3FFy+7a0zYl6ltVMR8PzInnHTaKg/My4wJX1ruPrBTx3gh7+WrHHeAppewmeMdfRdQfierEzkmW7phRv6NT/KQHjEcwBm8pU+OVP+WgWDsVBhzRm7CL6pDIuxS4xaM+bTPomhOcQOQb98YPseJak1iSu2x0/cy1v4a1PItptGbovMOzIUu++1ax284/JKXYuthN1NZqdEcSu6GlPxKv55gmApSCtq5RNJEjs8VRfcq/oGCFAWn6TV8DvJGIXKj58RJxrAqom2AlL3xZdIYwPZCvb/qHaXw5/iHaj+R7tUq1eBzgTbCnE3nvCJvMtqwouoC9V+P6jjBI6hJQ==',
+        $dadosPagamento = [
+            'amount' => '4000',
+            'card_hash' => '4659098_wo4GEGXFcpBqcxvwPhYT6shg15cu6lSvnW0eB4mdJ4WJDrwIOTeUdeBiXK2CoiSP6NhgUWGPGYF+F4TA/4Dt5ddGw8aHWvUyDFGIiDQg5vsnhJEzP5p+pTyxtCZc1MuawvdO5wAM9RgRdQd3oh2iT1iL0Pqq48mcSV2FWLD6uvS2LuPCNryGSeyWWmZV/KJYx2ga6ztbBK3BQiFHj6XJvT1oRpxEFhYVEQUo6gRlsljRc66TNT7Ny91hiHVPnVMHtvvIQg2yAfMsnExOk+JhWd2061DYZn2UWw1C/B4DXlZkZ6tXKvZcmh7sF15zzXiSMkDx441JDCPRxQuUEL1vew==',
             'async' => false
-        ]);
+        ];
 
-        dd($transaction);
+        $resposta = $this->pagamentoServico->pagar($dadosPagamento);
+
+        dd($resposta);
     }
 }
