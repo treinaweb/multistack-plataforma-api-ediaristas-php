@@ -190,4 +190,15 @@ class Diaria extends Model
             ->whereDate('data_atendimento', '<', Carbon::now()->addHours(24)->toISOString())
             ->get();
     }
+
+    /**
+     * Define o status cancelado para uma diária
+     *
+     * @return void
+     */
+    public function cancelar(): void
+    {
+        $this->status = 5;
+        $this->save();
+    }
 }
