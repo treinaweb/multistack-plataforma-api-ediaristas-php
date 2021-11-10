@@ -183,4 +183,11 @@ class Diaria extends Model
     {
         return !!$this->avaliacoes()->where('avaliador_id', $usuarioId)->first();
     }
+
+    static public function comMenosDe24HorasParaAtendimentoSemDiarista(): Collection
+    {
+        return self::where('status', '2')
+            ->whereDate('data_atendimento', '<', Carbon::now()->addHours(24)->toISOString())
+            ->get();
+    }
 }
