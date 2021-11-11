@@ -28,4 +28,20 @@ class Pagarme implements PagamentoInterface
             $transaction->status
         );
     }
+
+    /**
+     * Realiza o estorno para o cliente do valor pago
+     *
+     * @param array $dados
+     * @return TransacaoResponse
+     */
+    public function estornar(array $dados): TransacaoResponse
+    {
+        $transacao = $this->pagarmeSDK->transactions()->refund($dados);
+
+        return new TransacaoResponse(
+            $transacao->id,
+            $transacao->status
+        );
+    }
 }
