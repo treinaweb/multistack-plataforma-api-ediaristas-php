@@ -33,7 +33,8 @@ class CancelarDiariasSemDiarista extends Command
     }
 
     /**
-     * Execute the console command.
+     * Cancela automaticamente as diárias com menos de 24 horas para o atendimento
+     * e que não possui diarista para realizar o atendimento
      *
      * @return int
      */
