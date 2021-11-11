@@ -4,6 +4,7 @@ namespace App\Tasks\Pagamento;
 
 use App\Models\Diaria;
 use App\Services\Pagamento\PagamentoInterface;
+use Illuminate\Validation\ValidationException;
 
 class EstornarPagamentoCliente
 {
@@ -21,6 +22,16 @@ class EstornarPagamentoCliente
             'id' => $pagamento->transacao_id
         ]);
 
-        dd($transacao);
+        $diaria->pagamentos()->create([
+            'status' => 'estornado',
+            'transacao_id' => $pagamento->transacao_id,
+            'valor' => $diaria->preco
+        ]);
+
+        if ($transacao->status !== 'refunded') {
+            throw ValidationException::withMessages([
+                'pagamento' => 'Não foi possível extornar o pagamento'
+            ]);
+        }
     }
 }
