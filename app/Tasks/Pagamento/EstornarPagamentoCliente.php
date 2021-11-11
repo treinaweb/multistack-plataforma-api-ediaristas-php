@@ -38,10 +38,17 @@ class EstornarPagamentoCliente
      */
     private function realizaEstornoGateway(int $transacaoId): TransacaoResponse
     {
-        return
-            $this->pagamento->estornar([
+        try {
+            $transacao = $this->pagamento->estornar([
                 'id' => $transacaoId
             ]);
+        } catch (\Throwable $exception) {
+            throw ValidationException::withMessages([
+                'pagamento' => $exception->getMessage()
+            ]);
+        }
+
+        return $transacao;
     }
 
     /**
