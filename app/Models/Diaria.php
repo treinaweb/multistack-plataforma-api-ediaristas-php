@@ -201,4 +201,14 @@ class Diaria extends Model
         $this->status = 5;
         $this->save();
     }
+
+    /**
+     * Retorna o primeiro pagamento valido para a diária
+     *
+     * @return Pagamento
+     */
+    public function pagamentoValido(): Pagamento
+    {
+        return $this->pagamentos()->where('status', 'pago')->first();
+    }
 }
