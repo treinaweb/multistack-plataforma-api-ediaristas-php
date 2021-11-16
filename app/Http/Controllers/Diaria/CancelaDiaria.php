@@ -21,8 +21,12 @@ class CancelaDiaria extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Diaria $diaria)
+    public function __invoke(Diaria $diaria, Request $request)
     {
-        $this->cancelar->executar($diaria);
+        $request->validate([
+            'motivo_cancelamento' => ['required', 'string']
+        ]);
+
+        $this->cancelar->executar($diaria, $request->motivo_cancelamento);
     }
 }
