@@ -4,6 +4,7 @@ namespace App\Actions\Diaria\Cancelamento;
 
 use App\Checkers\Diaria\ValidaStatusDiaria;
 use App\Models\Diaria;
+use App\Tasks\Usuario\AtualizaReputacao;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -12,7 +13,8 @@ use Illuminate\Validation\ValidationException;
 class Cancelar
 {
     public function __construct(
-        private ValidaStatusDiaria $validaStatusDiaria
+        private ValidaStatusDiaria $validaStatusDiaria,
+        private AtualizaReputacao $atualizaReputacao
     ) {
     }
 
@@ -48,7 +50,7 @@ class Cancelar
         $tipoUsuario = Auth::user()->tipo_usuario;
 
         if ($tipoUsuario == '2') {
-            //fazer uma ação
+            return $this->penalizacaoDiarista($diaria, $naoTemPenalidade);
         }
 
         //fazer o reembolso do cliente
@@ -63,5 +65,24 @@ class Cancelar
         $diferencaEmHoras = Carbon::now()->diffInHours($dataAtendimento, false);
 
         return $diferencaEmHoras > 24;
+    }
+
+    private function penalizacaoDiarista(Diaria $diaria, bool $naoTemPenalidade)
+    {
+        if ($naoTemPenalidade) {
+            return;
+        }
+
+        $usuarioLogadoId = Auth::user()->id;
+        
+        $diaria->avaliacoes()->create([
+            'nota' => 1,
+            'descricao' => 'penalização diária cancelada',
+            'avaliado_id' => $usuarioLogadoId,
+            'visibilidade' => 0,
+            'diria_id' => $diaria->id
+        ]);
+
+        $this->atualizaReputacao->executar($usuarioLogadoId);
     }
 }
