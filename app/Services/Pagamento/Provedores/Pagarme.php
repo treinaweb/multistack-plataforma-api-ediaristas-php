@@ -41,7 +41,8 @@ class Pagarme implements PagamentoInterface
 
         return new TransacaoResponse(
             $transacao->id,
-            $transacao->status
+            $transacao->status,
+            $transacao->refunded_amount
         );
     }
 }

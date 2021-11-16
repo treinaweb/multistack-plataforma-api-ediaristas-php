@@ -29,7 +29,7 @@ class EstornarPagamentoCliente
         $transacao = $this->realizaEstornoGateway($pagamento->transacao_id, $valor);
         $this->guardaTransacaoBancoDeDados($diaria, $pagamento->transacao_id, $valor);
 
-        $this->validaStatusEstorno($transacao);
+        $this->validaStatusEstorno($transacao, $valor);
     }
 
     /**
@@ -81,9 +81,11 @@ class EstornarPagamentoCliente
      * @param TransacaoResponse $transacao
      * @return void
      */
-    public function validaStatusEstorno(TransacaoResponse $transacao): void
+    public function validaStatusEstorno(TransacaoResponse $transacao, float $valorEstorno): void
     {
-        if ($transacao->status !== 'refunded') {
+        $valor = intval($valorEstorno * 100);
+
+        if ($transacao->valorEstornado !== $valor) {
             throw ValidationException::withMessages([
                 'pagamento' => 'Não foi possível extornar o pagamento'
             ]);
