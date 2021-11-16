@@ -2,14 +2,15 @@
 
 namespace App\Actions\Diaria\Cancelamento;
 
-use App\Checkers\Diaria\ValidaStatusDiaria;
-use App\Models\Diaria;
-use App\Tasks\Pagamento\EstornarPagamentoCliente;
-use App\Tasks\Usuario\AtualizaReputacao;
 use Carbon\Carbon;
+use App\Models\Diaria;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Tasks\Usuario\AtualizaReputacao;
+use App\Checkers\Diaria\ValidaStatusDiaria;
 use Illuminate\Validation\ValidationException;
+use App\Tasks\Pagamento\EstornarPagamentoCliente;
+
 
 class Cancelar
 {

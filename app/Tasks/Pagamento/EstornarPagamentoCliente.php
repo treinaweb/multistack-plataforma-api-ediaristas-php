@@ -14,10 +14,12 @@ class EstornarPagamentoCliente
     ) {
     }
 
+
     /**
      * Realiza o estorno no gateway de pagamento
      *
      * @param Diaria $diaria
+     * @param boolean $estornoCompleto
      * @return void
      */
     public function executar(Diaria $diaria, bool $estornoCompleto = true): void
@@ -36,6 +38,7 @@ class EstornarPagamentoCliente
      * Chama o serviço para realizar o estorno no gateway
      *
      * @param integer $transacaoId
+     * @param float $valorEstorno
      * @return TransacaoResponse
      */
     private function realizaEstornoGateway(int $transacaoId, float $valorEstorno): TransacaoResponse
@@ -61,6 +64,7 @@ class EstornarPagamentoCliente
      *
      * @param Diaria $diaria
      * @param integer $transacaoId
+     * @param float $valor
      * @return void
      */
     private function guardaTransacaoBancoDeDados(
@@ -79,6 +83,7 @@ class EstornarPagamentoCliente
      * Valida se o status da trasanção está correto para o estorno
      *
      * @param TransacaoResponse $transacao
+     * @param float $valorEstorno
      * @return void
      */
     public function validaStatusEstorno(TransacaoResponse $transacao, float $valorEstorno): void
