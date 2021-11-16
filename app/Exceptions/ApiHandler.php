@@ -20,7 +20,6 @@ trait ApiHandler
      */
     protected function getJsonException(\Throwable $e): JsonResponse
     {
-        dd($e);
         if ($e instanceof ModelNotFoundException) {
             return $this->notFoundException();
         }
