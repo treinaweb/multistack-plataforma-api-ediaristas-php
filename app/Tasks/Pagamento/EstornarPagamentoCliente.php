@@ -20,12 +20,14 @@ class EstornarPagamentoCliente
      * @param Diaria $diaria
      * @return void
      */
-    public function executar(Diaria $diaria): void
+    public function executar(Diaria $diaria, bool $estornoCompleto = true): void
     {
+        $valor = $this->valor($diaria, $estornoCompleto);
+
         $pagamento = $diaria->pagamentoValido();
 
-        $transacao = $this->realizaEstornoGateway($pagamento->transacao_id);
-        $this->guardaTransacaoBancoDeDados($diaria, $pagamento->transacao_id);
+        $transacao = $this->realizaEstornoGateway($pagamento->transacao_id, $valor);
+        $this->guardaTransacaoBancoDeDados($diaria, $pagamento->transacao_id, $valor);
 
         $this->validaStatusEstorno($transacao);
     }
@@ -36,11 +38,14 @@ class EstornarPagamentoCliente
      * @param integer $transacaoId
      * @return TransacaoResponse
      */
-    private function realizaEstornoGateway(int $transacaoId): TransacaoResponse
+    private function realizaEstornoGateway(int $transacaoId, float $valorEstorno): TransacaoResponse
     {
         try {
+            $valorEstorno = intval($valorEstorno * 100);
+
             $transacao = $this->pagamento->estornar([
-                'id' => $transacaoId
+                'id' => $transacaoId,
+                'amount' => $valorEstorno
             ]);
         } catch (\Throwable $exception) {
             throw ValidationException::withMessages([
@@ -58,12 +63,15 @@ class EstornarPagamentoCliente
      * @param integer $transacaoId
      * @return void
      */
-    private function guardaTransacaoBancoDeDados(Diaria $diaria, int $transacaoId): void
-    {
+    private function guardaTransacaoBancoDeDados(
+        Diaria $diaria,
+        int $transacaoId,
+        float $valor
+    ): void {
         $diaria->pagamentos()->create([
             'status' => 'estornado',
             'transacao_id' => $transacaoId,
-            'valor' => $diaria->preco
+            'valor' => $valor
         ]);
     }
 
@@ -80,5 +88,17 @@ class EstornarPagamentoCliente
                 'pagamento' => 'Não foi possível extornar o pagamento'
             ]);
         }
+    }
+
+    /**
+     * Retorna o valor do estorno
+     *
+     * @param Diaria $diaria
+     * @param boolean $estornoCompleto
+     * @return float
+     */
+    private function valor(Diaria $diaria, bool $estornoCompleto): float
+    {
+        return $estornoCompleto ? $diaria->preco : $diaria->preco / 2;
     }
 }

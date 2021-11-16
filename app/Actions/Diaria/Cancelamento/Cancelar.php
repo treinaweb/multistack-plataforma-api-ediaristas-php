@@ -4,6 +4,7 @@ namespace App\Actions\Diaria\Cancelamento;
 
 use App\Checkers\Diaria\ValidaStatusDiaria;
 use App\Models\Diaria;
+use App\Tasks\Pagamento\EstornarPagamentoCliente;
 use App\Tasks\Usuario\AtualizaReputacao;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,8 @@ class Cancelar
 {
     public function __construct(
         private ValidaStatusDiaria $validaStatusDiaria,
-        private AtualizaReputacao $atualizaReputacao
+        private AtualizaReputacao $atualizaReputacao,
+        private EstornarPagamentoCliente $estornarPagamentoCliente
     ) {
     }
 
@@ -24,7 +26,7 @@ class Cancelar
         $this->verificaDataAtendimento($diaria->data_atendimento);
         Gate::authorize('dono-diaria', $diaria);
 
-        //$diaria->cancelar($motivoCancelamento);
+        $diaria->cancelar($motivoCancelamento);
 
         $this->penalizacao($diaria);
 
@@ -53,9 +55,7 @@ class Cancelar
             return $this->penalizacaoDiarista($diaria, $naoTemPenalidade);
         }
 
-        //fazer o reembolso do cliente
-
-        dd($naoTemPenalidade);
+        $this->estornarPagamentoCliente->executar($diaria, $naoTemPenalidade);
     }
 
     private function verificaSeNaoTemPenalizacao(string $dataAtendimento)
@@ -74,7 +74,7 @@ class Cancelar
         }
 
         $usuarioLogadoId = Auth::user()->id;
-        
+
         $diaria->avaliacoes()->create([
             'nota' => 1,
             'descricao' => 'penalização diária cancelada',
