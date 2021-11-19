@@ -21,6 +21,8 @@ class ObtemPagamentosDiarista extends Controller
      */
     public function __invoke(Request $request)
     {
-        $this->obterPagamentosDiarista->executar();
+        $pagamentos = $this->obterPagamentosDiarista->executar();
+
+        return $pagamentos;
     }
 }
