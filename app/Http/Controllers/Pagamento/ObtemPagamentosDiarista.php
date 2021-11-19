@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Pagamento;
 
-use App\Actions\Pagamento\ObterPagamentosDiarista;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PagamentoCollection;
-use Illuminate\Http\Request;
+use App\Actions\Pagamento\ObterPagamentosDiarista;
 
 class ObtemPagamentosDiarista extends Controller
 {
@@ -15,12 +15,11 @@ class ObtemPagamentosDiarista extends Controller
     }
 
     /**
-     * Handle the incoming request.
+     * Retorna a lista de diarias como pagamento do(a) diarista
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return PagamentoCollection
      */
-    public function __invoke(Request $request)
+    public function __invoke(): PagamentoCollection
     {
         $pagamentos = $this->obterPagamentosDiarista->executar();
 
