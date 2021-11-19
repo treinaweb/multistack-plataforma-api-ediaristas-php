@@ -17,6 +17,7 @@ use App\Http\Controllers\Usuario\AutenticacaoController;
 use App\Http\Controllers\Diarista\DefineCidadesAtendidas;
 use App\Http\Controllers\Diarista\VerificaDisponibilidade;
 use App\Http\Controllers\Diaria\CadastroController as DiariaCadastroController;
+use App\Http\Controllers\Pagamento\ObtemPagamentosDiarista;
 
 Route::get('/', IndexController::class);
 
@@ -39,6 +40,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('/diarias/{diaria}/avaliacoes', AvaliaDiaria::class)->name('diarias.avaliar');
 
     Route::patch('/diarias/{diaria}/cancelado', CancelaDiaria::class)->name('diarias.cancelar');
+
+    Route::get('/pagamentos', ObtemPagamentosDiarista::class)->name('pagamentos.index');
 });
 
 Route::get('/diaristas/localidades', ObtemDiaristasPorCEP::class)->name('diaristas.buca_por_cep');
