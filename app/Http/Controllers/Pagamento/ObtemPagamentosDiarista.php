@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pagamento;
 
 use App\Actions\Pagamento\ObterPagamentosDiarista;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PagamentoCollection;
 use Illuminate\Http\Request;
 
 class ObtemPagamentosDiarista extends Controller
@@ -23,6 +24,6 @@ class ObtemPagamentosDiarista extends Controller
     {
         $pagamentos = $this->obterPagamentosDiarista->executar();
 
-        return $pagamentos;
+        return new PagamentoCollection($pagamentos);
     }
 }
