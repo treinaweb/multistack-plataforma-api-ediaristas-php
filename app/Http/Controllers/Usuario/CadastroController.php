@@ -48,6 +48,10 @@ class CadastroController extends Controller
      */
     public function update(UsuarioAlteracaoRequest $request)
     {
-        $this->atualizarUsuario->executar($request->all());
+        $this->atualizarUsuario->executar(
+            $request->except('password_confirmation')
+        );
+
+        return resposta_padrao('Usuário Atualiza com sucesso', 'success', 200);
     }
 }
