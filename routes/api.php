@@ -35,7 +35,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/usuarios/foto', DefineFotoPerfil::class)->name('usuarios.definir-foto');
 
     Route::put('/usuarios/endereco', DefineEndereco::class)->name('usuarios.definir-endereco');
-    Route::get('/usuarios/endereco', ObtemEndereco::class)->name('usuarios;obter-endereco');
+    Route::get('/usuarios/endereco', ObtemEndereco::class)->name('usuarios.obter-endereco');
     Route::put('/usuarios/cidades-atendidas', DefineCidadesAtendidas::class)->name('usuarios.definir-cidades');
     Route::get('/usuarios/cidades-atendidas', ObtemCidadesAtendidas::class)->name('usuarios.obter-cidades');
 
