@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Usuario;
 use App\Actions\Usuario\AtualizarUsuario;
 use App\Actions\Usuario\CriarUsuario;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UsuarioAlteracaoRequest;
 use App\Http\Requests\UsuarioCadastroRequest;
 use App\Http\Resources\Usuario;
 use Illuminate\Http\Request;
@@ -45,8 +46,8 @@ class CadastroController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UsuarioAlteracaoRequest $request)
     {
-        $this->atualizarUsuario->executar();
+        $this->atualizarUsuario->executar($request->all());
     }
 }
