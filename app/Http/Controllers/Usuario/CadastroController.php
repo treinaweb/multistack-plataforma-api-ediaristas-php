@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Usuario;
 
+use App\Actions\Usuario\AtualizarUsuario;
 use App\Actions\Usuario\CriarUsuario;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UsuarioCadastroRequest;
@@ -12,8 +13,10 @@ use Illuminate\Support\Facades\Auth;
 class CadastroController extends Controller
 {
     public function __construct(
-        private CriarUsuario $criarUsuario
-    ){}
+        private CriarUsuario $criarUsuario,
+        private AtualizarUsuario $atualizarUsuario
+    ) {
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -40,12 +43,10 @@ class CadastroController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $this->atualizarUsuario->executar();
     }
-
 }

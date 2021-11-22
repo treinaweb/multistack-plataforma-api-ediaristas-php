@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/diarias', [DiariaCadastroController::class, 'store'])->name('diarias.store');
     Route::get('/diarias/{diaria}', [DiariaCadastroController::class, 'show'])->name('diarias.show');
 
+    Route::put('/usuarios', [CadastroController::class, 'update'])->name('usuarios.update');
+
     Route::put('/usuarios/endereco', DefineEndereco::class)->name('usuarios.definir-endereco');
     Route::put('/usuarios/cidades-atendidas', DefineCidadesAtendidas::class)->name('usuarios.definir-cidades');
 
