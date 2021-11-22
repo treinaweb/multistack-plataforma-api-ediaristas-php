@@ -2,12 +2,18 @@
 
 namespace App\Actions\Diarista;
 
+use App\Models\Endereco;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class ObterEndereco
 {
-    public function executar()
+    /**
+     * Obtem o endereço do(a) diarista
+     *
+     * @return Endereco
+     */
+    public function executar(): Endereco
     {
         Gate::authorize('tipo-diarista');
 

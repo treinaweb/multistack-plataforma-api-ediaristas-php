@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Usuario;
 
 use App\Actions\Usuario\DefinirFotoPerfil;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class DefineFotoPerfil extends Controller
@@ -14,12 +15,12 @@ class DefineFotoPerfil extends Controller
     }
 
     /**
-     * Handle the incoming request.
+     * Define a foto do usuário
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
         $request->validate([
             'foto_usuario' => ['required', 'image']

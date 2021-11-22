@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Rules\IdadeMinima;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Http\FormRequest;
 
 class UsuarioAlteracaoRequest extends FormRequest
 {
