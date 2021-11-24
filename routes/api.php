@@ -21,6 +21,7 @@ use App\Http\Controllers\Diarista\DefineCidadesAtendidas;
 use App\Http\Controllers\Diarista\VerificaDisponibilidade;
 use App\Http\Controllers\Pagamento\ObtemPagamentosDiarista;
 use App\Http\Controllers\Diaria\CadastroController as DiariaCadastroController;
+use App\Http\Controllers\Usuario\ResetarSenhaController;
 
 Route::get('/', IndexController::class);
 
@@ -59,3 +60,5 @@ Route::get('/enderecos', BuscaCepApiExterna::class)->name('enderecos.cep');
 Route::get('/servicos', ObtemServicos::class)->name('servicos.index');
 
 Route::post('/usuarios', [CadastroController::class, 'store'])->name('usuarios.create');
+
+Route::post('/recuperar-senha', [ResetarSenhaController::class, 'solicitarToken'])->name('usuarios.solicitar_alteracao_senha');
