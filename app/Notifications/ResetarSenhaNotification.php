@@ -40,9 +40,12 @@ class ResetarSenhaNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->view('email.mensagens.resetar-senha', [
-            'url' => $this->url
-        ]);
+        return (new MailMessage)
+            ->view('email.mensagens.resetar-senha', [
+                'url' => $this->url
+            ])
+            ->subject('Link de reset de senha')
+            ->from('contato@ediaristas.com.br', 'Contato');
     }
 
     /**
