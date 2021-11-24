@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\ResetarSenhaNotification;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
@@ -159,5 +160,12 @@ class User extends Authenticatable implements JWTSubject
     public function cidadesAtentidasDiarista(): array
     {
         return $this->cidadesAtendidas()->pluck('codigo_ibge')->toArray();
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $url = 'http://localhost:3000/recuperar-senha?token=' . $token;
+
+        $this->notify(new ResetarSenhaNotification($url));
     }
 }
