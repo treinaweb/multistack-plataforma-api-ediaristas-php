@@ -62,3 +62,4 @@ Route::get('/servicos', ObtemServicos::class)->name('servicos.index');
 Route::post('/usuarios', [CadastroController::class, 'store'])->name('usuarios.create');
 
 Route::post('/recuperar-senha', [ResetarSenhaController::class, 'solicitarToken'])->name('usuarios.solicitar_alteracao_senha');
+Route::post('/recuperar-senha/confirm', [ResetarSenhaController::class, 'resetarSenha'])->name('usuarios.alterar_senha');
