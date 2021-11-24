@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers\Usuario;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Validation\ValidationException;
 
 class ResetarSenhaController extends Controller
 {
-    public function solicitarToken(Request $request)
+    /**
+     * Envia o email com o link de reset de senha
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function solicitarToken(Request $request): JsonResponse
     {
         $request->validate([
             'email' => ['required', 'email']
@@ -28,7 +35,13 @@ class ResetarSenhaController extends Controller
         );
     }
 
-    public function resetarSenha(Request $request)
+    /**
+     * Reseta a senha do usuário no banco de dados
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function resetarSenha(Request $request): JsonResponse
     {
         $request->validate([
             'email' => ['required', 'email'],

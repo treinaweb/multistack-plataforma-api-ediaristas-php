@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Notifications\ResetarSenhaNotification;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use App\Notifications\ResetarSenhaNotification;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -162,6 +162,12 @@ class User extends Authenticatable implements JWTSubject
         return $this->cidadesAtendidas()->pluck('codigo_ibge')->toArray();
     }
 
+    /**
+     * Chama uma notificação personalizada para o reset de senha
+     *
+     * @param string $token
+     * @return void
+     */
     public function sendPasswordResetNotification($token)
     {
         $url = config('app.client_web_url') . '/recuperar-senha?token=' . $token;
