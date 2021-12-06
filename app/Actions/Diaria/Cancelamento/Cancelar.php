@@ -71,7 +71,7 @@ class Cancelar
 
         if ($tipoUsuario == '2') {
             $this->penalizacaoDiarista($diaria, $naoTemPenalidade);
-            return;
+            $naoTemPenalidade = true;
         }
 
         $this->estornarPagamentoCliente->executar($diaria, $naoTemPenalidade);
