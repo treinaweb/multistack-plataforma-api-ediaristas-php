@@ -15,8 +15,8 @@ class AtualizarUsuario
      */
     public function executar(array $dados): void
     {
-        if (isset($dados['password'])) {
-            $dados['password'] = Hash::make($dados['password']);
+        if (isset($dados['new_password'])) {
+            $dados['password'] = Hash::make($dados['new_password']);
         }
 
         $user = Auth::user();

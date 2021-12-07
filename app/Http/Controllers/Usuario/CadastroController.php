@@ -52,6 +52,6 @@ class CadastroController extends Controller
             $request->except('password_confirmation')
         );
 
-        return resposta_padrao('Usuário Atualiza com sucesso', 'success', 200);
+        return resposta_padrao('Usuário Atualizado com sucesso', 'success', 200);
     }
 }
