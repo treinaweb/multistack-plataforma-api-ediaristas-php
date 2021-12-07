@@ -5,6 +5,7 @@ namespace App\Actions\Diarista;
 use App\Models\Endereco;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ObterEndereco
 {
@@ -19,6 +20,12 @@ class ObterEndereco
 
         $diarista = Auth::user();
 
-        return $diarista->enderecoDiarista()->first();
+        $endereco = $diarista->enderecoDiarista()->first();
+
+        if (!$endereco) {
+            throw new HttpException(404, 'endereço não cadastrado');
+        }
+
+        return $endereco;
     }
 }
