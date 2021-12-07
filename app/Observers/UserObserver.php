@@ -21,7 +21,7 @@ class UserObserver
             return;
         }
 
-        $user->reputacao = User::avg('reputacao');
+        $user->reputacao = (int) User::avg('reputacao');
     }
 
     /**
