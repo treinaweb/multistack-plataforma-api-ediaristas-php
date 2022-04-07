@@ -32,6 +32,6 @@ class UserObserver
      */
     public function created(User $user): void
     {
-        Mail::to($user->email)->send(new UsuarioCadastrado($user));
+        //Mail::to($user->email)->send(new UsuarioCadastrado($user));
     }
 }
